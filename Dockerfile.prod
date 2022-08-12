@@ -1,0 +1,17 @@
+# imagem do dockerhub
+FROM node:14.17.0-slim
+
+#diretorio de trabalho
+WORKDIR /home/node/app
+
+#copia o json das dependêcias
+COPY package*.json ./
+
+#instala as depedências
+RUN npm install
+
+#copia o restante (posso criar o .dockerignore)
+COPY . .
+
+#subir produção
+CMD ["node", "/home/node/app/index.js"]
