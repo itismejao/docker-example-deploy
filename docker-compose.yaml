@@ -1,0 +1,25 @@
+#versão do cocker compose
+version: '3'
+
+services:
+  app:
+    #localizacao do dockerfile
+    build: .
+    ports:
+      - 8000:3000
+    volumes:
+      - .:/home/node/app
+      # volume anonimo que preserva e não sobrescreve
+      # - /home/node/app/node_modules
+    
+    #o db sobe primeiro
+    depends_on:
+      - db
+
+  db:
+    image:  mysql:5.7
+    environment:
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./dbdata:/var/lib/mysql
